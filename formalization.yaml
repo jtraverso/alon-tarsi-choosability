@@ -1,0 +1,153 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "The Alon–Tarsi theorem and 3-choosability of planar bipartite graphs"
+  description: >-
+    A Lean 4 / Mathlib formalization of the Alon–Tarsi theorem: if a finite simple graph has an
+    orientation whose numbers of even and odd Eulerian subdigraphs differ, then it can be properly
+    coloured from any lists larger than the out-degrees; and of its corollary that every finite
+    planar bipartite graph is 3-choosable. Planarity is the combinatorial notion of a plane map (a
+    rotation system of genus zero) of the registered entry PALOMAR-2026-10-15-000005, whose
+    definitions are reproduced verbatim in the Challenge. The proof uses the graph polynomial and
+    Mathlib's Combinatorial Nullstellensatz, Euler's formula for plane maps, and an out-degree-2
+    orientation obtained from Hall's theorem.
+  authors:
+    - "Juan Pablo Traverso Gianini"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Juan Pablo Traverso Gianini"
+
+classification:
+  arxiv: ["math.CO"]
+  msc2020: ["05C15", "05C10", "05C20"]
+
+sources:
+  - title: "Colorings and orientations of graphs"
+    authors:
+      - "N. Alon"
+      - "M. Tarsi"
+    id: "doi:10.1007/BF01204715"
+    type: "paper"
+    location: "Combinatorica 12 (1992), 125–134"
+    relationship: "formalizes"
+    note: "The Alon–Tarsi theorem and the 3-choosability of planar bipartite graphs."
+    license: "all rights reserved"
+    author_endorsement: "n/a"
+  - title: "Combinatorial Nullstellensatz"
+    authors:
+      - "N. Alon"
+    id: "doi:10.1017/S0963548398003411"
+    type: "paper"
+    location: "Combinatorics, Probability and Computing 8 (1999), 7–29"
+    relationship: "background"
+    note: "The polynomial method used in the proof (formalized in Mathlib)."
+    license: "all rights reserved"
+    author_endorsement: "not-contacted"
+  - title: "On the degrees of the vertices of a directed graph"
+    authors:
+      - "S. L. Hakimi"
+    id: "doi:10.1016/0016-0032(65)90340-6"
+    type: "paper"
+    location: "Journal of the Franklin Institute 279 (1965), 290–308"
+    relationship: "background"
+    note: "Orientations with bounded out-degrees from local density bounds."
+    license: "all rights reserved"
+    author_endorsement: "n/a"
+
+related_formalizations:
+  - id: "PALOMAR-2026-10-15-000005 (jtraverso/planar-list-colouring)"
+    relationship: "builds-on"
+    note: >-
+      The same author's planarity / list colouring entry. Its planarity files (`LeanPool/` here:
+      plane maps, Euler's formula, face-length lemmas, minor closure) are included unchanged and
+      its definition of planarity is used in the statement.
+  - id: "Mathlib: MvPolynomial.combinatorial_nullstellensatz_exists_eval_nonzero"
+    relationship: "builds-on"
+    note: "Alon's Combinatorial Nullstellensatz in Mathlib."
+
+status:
+  scope: >-
+    The Alon–Tarsi theorem is proved for every finite simple graph with an orientation whose
+    numbers of even and odd Eulerian subdigraphs differ, for lists larger than the out-degrees;
+    the 3-choosability statement for every finite planar bipartite graph. Lists are over an
+    arbitrary colour type.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: "autonomous"
+      models: ["Aristotle (Harmonic)"]
+      framework: "Aristotle CLI"
+      tool_setup: >-
+        Produced all proofs in one run from the formal statements and a proof plan (graph
+        polynomial and Nullstellensatz; bipartite Eulerian subdigraphs are even; sparsity of planar
+        bipartite graphs from Euler's formula; Hakimi's lemma) on top of the existing planarity
+        library; the return was audited (statements, definitions and headers unchanged, library
+        unchanged, no added axioms) and rebuilt locally.
+      cost:
+        wall_time: "under one hour"
+        spend_usd: "not tracked"
+        hardware: "API-only"
+      prompting_notes: "Formal statements and proof plan supplied."
+    - method: "agent"
+      models: ["Claude Opus 5.5"]
+      framework: "Claude Code (Anthropic)"
+      tool_setup: >-
+        Statement design, proof plan, integration and review of the Aristotle return, and the
+        Palomar packaging (planarity definitions reproduced verbatim), checked with `lake build`,
+        `#print axioms` and a comparison of the elaborated Challenge and Solution declarations
+        (Lean v4.35.0-rc3, Mathlib c55e6e786f49471c72fbddbec5415808896aec1e).
+      cost:
+        wall_time: "about one hour"
+        spend_usd: "subscription-based"
+        hardware: "local machine"
+      prompting_notes: "Natural-language instructions in Spanish, directed by the author."
+  spend_usd: "subscription-based"
+  notes: >-
+    The results were chosen by the human author; the Lean proofs are AI-generated and
+    mechanically verified (no `sorry`, axioms limited to propext, Classical.choice and Quot.sound,
+    identical elaborated types and definitions for the Challenge/Solution pair).
+
+fidelity:
+  divergences: >-
+    An orientation is a relation D on the vertices with every arc an edge, every edge oriented and
+    no edge oriented both ways; Eulerian subdigraphs are subsets of the arc set (as pairs) with
+    equal in- and out-degree at every vertex, counted by parity with classical decidability. The
+    out-degree is the number of w with D v w. Planarity is the existence of a plane map (a rotation
+    system on darts with Euler defect 0), shown in PALOMAR-2026-10-15-000005 to be equivalent to
+    Wagner's minor characterization; bipartiteness is `Colorable 2`. Lists are finsets over an
+    arbitrary colour type.
+
+review:
+  status: "agent-reviewed"
+  reviewers:
+    - "Claude Opus 5.5 (AI agent in Claude Code, acting for the author)"
+  notes: >-
+    Agent review by Claude Opus 5.5, distinct from the mechanical verification: the agent
+    compared the statements with the Alon–Tarsi theorem and its planar corollary, checked the
+    definitions of orientations and Eulerian counts on small examples (cyclic and transitive
+    orientations of a triangle), checked that the Aristotle return left the statements,
+    definitions, headers and reused library unchanged, and confirmed by `lake build`,
+    `#print axioms` and a comparison of the fully elaborated Challenge and Solution declarations
+    that the proofs use no `sorry` and only propext, Classical.choice and Quot.sound. The author
+    directed the work and approved the statements. No independent human mathematical review has
+    been performed. The results are classical; no mathematical novelty is claimed.
+
+alignment:
+  namespace: "OrientationColouring"
+  statements:
+    - source: "Alon–Tarsi (1992): orientations with EE ≠ EO give list colourings"
+      lean: "OrientationColouring.alon_tarsi"
+      module: "Challenge"
+      status: "proved"
+    - source: "Alon–Tarsi (1992): planar bipartite graphs are 3-choosable"
+      lean: "OrientationColouring.choosable_three_of_isPlanar_bipartite"
+      module: "Challenge"
+      status: "proved"
+
+acknowledgements: >-
+  Mathlib and the Lean community (in particular Mathlib's Combinatorial Nullstellensatz);
+  Harmonic's Aristotle.

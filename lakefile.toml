@@ -1,0 +1,29 @@
+name = "alon_tarsi"
+version = "0.1.0"
+defaultTargets = ["LeanPool", "AlonTarsiLib", "Challenge", "Solution"]
+requiresModuleSystem = true
+
+[leanOptions]
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc3"
+
+[[lean_lib]]
+name = "LeanPool"
+globs = ["LeanPool.+"]
+
+[[lean_lib]]
+name = "AlonTarsiLib"
+globs = ["AlonTarsiLib.+"]
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]
