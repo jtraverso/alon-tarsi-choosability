@@ -25,8 +25,9 @@ vertex, as many arcs of `F` leaving as entering; it is *even* or *odd* according
 Planarity is combinatorial: a graph is planar if it has a *plane map*, a rotation system of the
 darts of genus zero (Euler defect `0`). This is the notion of the registered entry
 PALOMAR-2026-10-15-000005; its definitions are reproduced below verbatim, with the same names as in
-the library, together with the definitions of orientations and Eulerian counts, so that the
-comparator checks them declaration by declaration.
+the library, together with the definitions of orientations and Eulerian counts. `comparator.json`
+selects only the two theorems; the definitions are not selected separately and enter the check
+only as part of the theorem statements that use them.
 
 The Mathlib definitions used in these statements are reproduced verbatim, with file and line at the
 pinned Mathlib revision, in `MATHLIB_DEFINITIONS.md` at the root of this repository.
